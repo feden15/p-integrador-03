@@ -65,6 +65,31 @@ app.get('/api/v1/productos', async (req, res) => {
 
 })
 
+// GET ONE
+app.get('/api/v1/productos/:id', async (req, res) => {
+    
+    const id = req.params.id
+
+    try {
+        
+        if (id) {
+            const producto = await ProductoModelo.findById(id)
+            res.json(producto)
+        } else {
+            res.status(400).json({
+                mensaje: 'No se envió la información necesaria'
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            mensaje: 'Hubo un inconveniente, no se pudo obtener el producto'
+        })
+    }
+
+})
+
 // ! --------------------------------------------------------------------------
 
 // ! Arranque
