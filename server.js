@@ -28,6 +28,10 @@ const productoSchema = new mongoose.Schema(
         detalles: String,
         foto: String,
         envio: Boolean
+    },
+    {
+        versionKey: false,
+        timestamps: true
     }
 )
 
