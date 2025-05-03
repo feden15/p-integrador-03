@@ -48,6 +48,23 @@ app.get('/', (req, res) => {
     res.send('Proyecto Integrador - Etapa 3')
 })
 
+// GET ALL
+app.get('/api/v1/productos', async (req, res) => {
+
+    try {
+        
+        const productos = await ProductoModelo.find({})
+        res.json(productos)
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            mensaje: 'No se pudieron listar los productos'
+        })
+    }
+
+})
+
 // ! --------------------------------------------------------------------------
 
 // ! Arranque
