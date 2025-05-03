@@ -40,6 +40,9 @@ const ProductoModelo = mongoose.model('productos', productoSchema)
 // ! --------------------------------------------------------------------------
 
 // ! Middlewares
+
+app.use(express.json()) // para poder comprender lo que llega en el body a través de un json
+
 // ! --------------------------------------------------------------------------
 
 // ! Rutas
@@ -86,6 +89,23 @@ app.get('/api/v1/productos/:id', async (req, res) => {
         res.status(500).json({
             mensaje: 'Hubo un inconveniente, no se pudo obtener el producto'
         })
+    }
+
+})
+
+// CREATE (POST)
+app.post('/api/v1/productos', async (req, res) => {
+
+    const productoACrear = req.body
+    // console.log(productoACrear)
+
+    try {
+        const productoModel = new ProductoModelo(productoACrear)
+        const productoCreado = await productoModel.save()
+        res.status(201).json(productoCreado)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ mensaje: 'No se pudo crear el producto' })
     }
 
 })
