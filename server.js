@@ -114,6 +114,28 @@ app.post('/api/v1/productos', async (req, res) => {
 
 })
 
+app.delete('/api/v1/productos/:id', async (req, res) => {
+
+    const id = req.params.id
+    
+    try {
+
+        const productoBorrado = await ProductoModelo.findByIdAndDelete(id).lean()
+        // Lean lo que hace es saca el objeto completo de mongoose y te da uno limpio (solo el producto a borrar)
+        // convierte un obj de mongoose en un objeto de javascript
+        res.json({
+            ...productoBorrado // Puedo hacerlo así porque usé lean() antes
+        })
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: "No se pudo borrar el producto"
+        })
+    }
+
+})
+
 // ! --------------------------------------------------------------------------
 
 // ! Arranque
