@@ -41,7 +41,16 @@ const obtenerTodosLosProductos = async () => {
     }
 }
 
-const obtenerUnProducto = (id) => {
+const obtenerUnProducto = async (id) => {
+
+    try {
+
+        const producto = await ProductoModelo.findById(id)
+        return producto
+        
+    } catch (error) {
+        throw error
+    }
 
 }
 

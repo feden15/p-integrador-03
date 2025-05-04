@@ -8,7 +8,12 @@ const getAll = async (req, res) => {
         res.json(productos)
 
     } catch (error) {
+
         console.log(error)
+        res.status(500).json({
+            mensaje: 'No se pudieron listar los productos'
+        })
+        
     }
 
 }
@@ -20,7 +25,7 @@ const getOne = async (req, res) => {
     try {
 
         if (id) {
-            const producto = await ProductoModelo.findById(id)
+            const producto = await models.obtenerUnProducto(id)
             res.json(producto)
         } else {
             res.status(400).json({
