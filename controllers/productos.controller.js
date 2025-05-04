@@ -62,48 +62,45 @@ const create = async (req, res) => {
 
 }
 
+const update = async (req, res) => {
+    
+    const id = req.params.id
+    const productoEditado = req.body
+    
+    try {
+        
+        // console.log(id);
+        // console.log(productoEditado)
+        
+        const productoActualizado = await ProductoModelo.findByIdAndUpdate(id, productoEditado, { new: true }).lean()
+        // con la opción {new: true} me va a devolver el usuario actualizado, no el usuario viejo
+        
+        res.json({
+            ...productoActualizado
+        })
+        
+    } catch (error) {
+        res.json({
+            mensaje: 'No se pudo actualizar el producto'
+        })
+    }
+    
+}
+
 const remove = async (req, res) => {
 
     const id = req.params.id
 
     try {
 
-        const productoBorrado = await ProductoModelo.findByIdAndDelete(id).lean()
-        // Lean lo que hace es saca el objeto completo de mongoose y te da uno limpio (solo el producto a borrar)
-        // convierte un obj de mongoose en un objeto de javascript
-        res.json({
-            ...productoBorrado // Puedo hacerlo así porque usé lean() antes
-        })
+        const productoEliminado = await models.eliminarProducto(id)
+        res.json(productoEliminado)
 
     } catch (error) {
 
+        console.log(error)
         res.status(500).json({
             mensaje: "No se pudo borrar el producto"
-        })
-    }
-
-}
-
-const update = async (req, res) => {
-
-    const id = req.params.id
-    const productoEditado = req.body
-
-    try {
-
-        // console.log(id);
-        // console.log(productoEditado)
-
-        const productoActualizado = await ProductoModelo.findByIdAndUpdate(id, productoEditado, { new: true }).lean()
-        // con la opción {new: true} me va a devolver el usuario actualizado, no el usuario viejo
-
-        res.json({
-            ...productoActualizado
-        })
-
-    } catch (error) {
-        res.json({
-            mensaje: 'No se pudo actualizar el producto'
         })
     }
 

@@ -69,10 +69,19 @@ const crearUnProducto = async (productoNuevo) => {
 }
 
 const editarUnProducto = (productoEditado) => {
-
+    
 }
 
-const removerProducto = (id) => {
+const eliminarProducto = async (id) => {
+
+    try {
+
+        const productoEliminado = await ProductoModelo.findByIdAndDelete(id)
+        return productoEliminado
+
+    } catch (error) {
+        throw error
+    }
 
 }
 
@@ -81,5 +90,5 @@ export default {
     obtenerUnProducto,
     crearUnProducto,
     editarUnProducto,
-    removerProducto
+    eliminarProducto
 }
