@@ -3,8 +3,6 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 import connection from './utils/connection.js'
 
-// ! Constantes
-
 const app = express()
 const PORT = 8080
 const URI_DB = process.env.URI_LOCAL
@@ -34,8 +32,6 @@ const productoSchema = new mongoose.Schema(
 
 //                             ('nombre-colección', schema a usar)
 const ProductoModelo = mongoose.model('productos', productoSchema)
-
-// ! --------------------------------------------------------------------------
 
 // ! Middlewares
 
