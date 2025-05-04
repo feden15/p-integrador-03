@@ -15,4 +15,6 @@ const uploadImagen = (req, res) => {
 
 }
 
-export default uploadImagen
+export default {
+    uploadImagen
+}
