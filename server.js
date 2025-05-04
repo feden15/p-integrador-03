@@ -114,6 +114,7 @@ app.post('/api/v1/productos', async (req, res) => {
 
 })
 
+// DELETE
 app.delete('/api/v1/productos/:id', async (req, res) => {
 
     const id = req.params.id
@@ -131,6 +132,32 @@ app.delete('/api/v1/productos/:id', async (req, res) => {
 
         res.status(500).json({
             mensaje: "No se pudo borrar el producto"
+        })
+    }
+
+})
+
+// UPDATE
+app.put('/api/v1/productos/:id', async (req, res) => {
+
+    const id = req.params.id
+    const productoEditado = req.body
+
+    try {
+
+        // console.log(id);
+        // console.log(productoEditado)
+
+        const productoActualizado = await ProductoModelo.findByIdAndUpdate(id, productoEditado, { new: true }).lean()
+        // con la opción {new: true} me va a devolver el usuario actualizado, no el usuario viejo
+
+        res.json({
+            ...productoActualizado
+        })
+
+    } catch (error) {
+        res.json({
+            mensaje: 'No se pudo actualizar el producto'
         })
     }
 
