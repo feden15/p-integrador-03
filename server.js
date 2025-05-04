@@ -153,6 +153,16 @@ app.put('/api/v1/productos/:id', async (req, res) => {
 
 })
 
+app.all('*', (req, res) => {
+
+    res.status(404).json({
+        ruta: `${req.url}`,
+        metodo: `${req.method}`,
+        mensaje: 'No se encontró el recurso al que estás queriendo acceder'
+    })
+
+})
+
 // ! --------------------------------------------------------------------------
 
 // ! Arranque
