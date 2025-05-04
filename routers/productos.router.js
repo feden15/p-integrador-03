@@ -1,149 +1,32 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import productosController from '../controllers/productos.controller.js'
+
 const routerProductos = express.Router()
 
-// ? 1. Crear un ESQUEMA
-// Para crear un SCHEMA lo que hago es decirle a Mongoose cómo va a ser el documento (qué forma va a tener)
-
-const productoSchema = new mongoose.Schema(
-    {
-        nombre: String,
-        precio: Number,
-        stock: Number,
-        marca: String,
-        categoria: String,
-        detalles: String,
-        foto: String,
-        envio: Boolean
-    },
-    {
-        versionKey: false,
-        timestamps: true
-    }
-)
-
-// ? 2. Crear un MODELO (a partir del esquema)
-// Le digo a Mongoose que el documento descripto en el esquema, se va a guardar en la colección indicada
-
-//                             ('nombre-colección', schema a usar)
-const ProductoModelo = mongoose.model('productos', productoSchema)
-
 // GET ALL
-routerProductos.get('/', async (req, res) => {
-
-    try {
-
-        const productos = await ProductoModelo.find({})
-        res.json(productos)
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            mensaje: 'No se pudieron listar los productos'
-        })
-    }
-
-})
+routerProductos.get('/', productosController.getAll)
 
 // GET ONE
-routerProductos.get('/:id', async (req, res) => {
-
-    const id = req.params.id
-
-    try {
-
-        if (id) {
-            const producto = await ProductoModelo.findById(id)
-            res.json(producto)
-        } else {
-            res.status(400).json({
-                mensaje: 'No se envió la información necesaria'
-            })
-        }
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            mensaje: 'Hubo un inconveniente, no se pudo obtener el producto'
-        })
-    }
-
-})
+routerProductos.get('/:id', productosController.getOne)
 
 // CREATE (POST)
-routerProductos.post('/', async (req, res) => {
-
-    const productoACrear = req.body
-    // console.log(productoACrear)
-
-    try {
-        const productoModel = new ProductoModelo(productoACrear)
-        const productoCreado = await productoModel.save()
-        res.status(201).json(productoCreado)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({ mensaje: 'No se pudo crear el producto' })
-    }
-
-})
+routerProductos.post('/', productosController.create)
 
 // DELETE
-routerProductos.delete('/:id', async (req, res) => {
-
-    const id = req.params.id
-
-    try {
-
-        const productoBorrado = await ProductoModelo.findByIdAndDelete(id).lean()
-        // Lean lo que hace es saca el objeto completo de mongoose y te da uno limpio (solo el producto a borrar)
-        // convierte un obj de mongoose en un objeto de javascript
-        res.json({
-            ...productoBorrado // Puedo hacerlo así porque usé lean() antes
-        })
-
-    } catch (error) {
-
-        res.status(500).json({
-            mensaje: "No se pudo borrar el producto"
-        })
-    }
-
-})
+routerProductos.delete('/:id', productosController.remove)
 
 // UPDATE
-routerProductos.put('/:id', async (req, res) => {
+routerProductos.put('/:id', productosController.update)
 
-    const id = req.params.id
-    const productoEditado = req.body
+// routerProductos.all('', (req, res) => {
 
-    try {
+//     res.status(404).json({
+//         ruta: `${req.url}`,
+//         metodo: `${req.method}`,
+//         mensaje: 'No se encontró el recurso al que estás queriendo acceder'
+//     })
 
-        // console.log(id);
-        // console.log(productoEditado)
-
-        const productoActualizado = await ProductoModelo.findByIdAndUpdate(id, productoEditado, { new: true }).lean()
-        // con la opción {new: true} me va a devolver el usuario actualizado, no el usuario viejo
-
-        res.json({
-            ...productoActualizado
-        })
-
-    } catch (error) {
-        res.json({
-            mensaje: 'No se pudo actualizar el producto'
-        })
-    }
-
-})
-
-routerProductos.all('', (req, res) => {
-
-    res.status(404).json({
-        ruta: `${req.url}`,
-        metodo: `${req.method}`,
-        mensaje: 'No se encontró el recurso al que estás queriendo acceder'
-    })
-
-})
+// })
 
 export default routerProductos
