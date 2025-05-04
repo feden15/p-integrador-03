@@ -1,5 +1,4 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import 'dotenv/config'
 import connection from './utils/connection.js'
 import routerProductos from './routers/productos.router.js'

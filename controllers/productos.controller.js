@@ -1,43 +1,19 @@
-// ? 1. Crear un ESQUEMA
-// Para crear un SCHEMA lo que hago es decirle a Mongoose cómo va a ser el documento (qué forma va a tener)
-
-import mongoose from "mongoose"
-
-const productoSchema = new mongoose.Schema(
-    {
-        nombre: String,
-        precio: Number,
-        stock: Number,
-        marca: String,
-        categoria: String,
-        detalles: String,
-        foto: String,
-        envio: Boolean
-    },
-    {
-        versionKey: false,
-        timestamps: true
-    }
-)
-
-// ? 2. Crear un MODELO (a partir del esquema)
-// Le digo a Mongoose que el documento descripto en el esquema, se va a guardar en la colección indicada
-
-//                             ('nombre-colección', schema a usar)
-const ProductoModelo = mongoose.model('productos', productoSchema)
+import models from '../models/productos.model.js'
 
 const getAll = async (req, res) => {
 
     try {
 
-        const productos = await ProductoModelo.find({})
+        const productos = await models.obtenerTodosLosProductos()
         res.json(productos)
 
     } catch (error) {
+
         console.log(error)
         res.status(500).json({
             mensaje: 'No se pudieron listar los productos'
         })
+        
     }
 
 }
