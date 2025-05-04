@@ -37,12 +37,7 @@ const obtenerTodosLosProductos = async () => {
         return productos
 
     } catch (error) {
-
-        console.log(error)
-        res.status(500).json({
-            mensaje: 'No se pudieron listar los productos'
-        })
-        
+        throw error
     }
 }
 

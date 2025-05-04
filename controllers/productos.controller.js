@@ -8,12 +8,7 @@ const getAll = async (req, res) => {
         res.json(productos)
 
     } catch (error) {
-
         console.log(error)
-        res.status(500).json({
-            mensaje: 'No se pudieron listar los productos'
-        })
-        
     }
 
 }
