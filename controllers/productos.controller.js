@@ -65,24 +65,21 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     
     const id = req.params.id
-    const productoEditado = req.body
+    const productoAEditar = req.body
+    productoAEditar.id = id 
     
     try {
         
-        // console.log(id);
-        // console.log(productoEditado)
-        
-        const productoActualizado = await ProductoModelo.findByIdAndUpdate(id, productoEditado, { new: true }).lean()
-        // con la opción {new: true} me va a devolver el usuario actualizado, no el usuario viejo
-        
-        res.json({
-            ...productoActualizado
-        })
+        const productoActualizado = await models.editarUnProducto(productoAEditar)
+        res.json(productoActualizado)
         
     } catch (error) {
+
+        console.log(error)
         res.json({
             mensaje: 'No se pudo actualizar el producto'
         })
+
     }
     
 }

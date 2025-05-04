@@ -68,8 +68,19 @@ const crearUnProducto = async (productoNuevo) => {
 
 }
 
-const editarUnProducto = (productoEditado) => {
-    
+const editarUnProducto = async (productoAEditar) => {
+
+    try {
+        
+        const options = { new: true } // para que retorne el producto una vez se edite, no antes
+
+        const productoEditado = await ProductoModelo.findByIdAndUpdate(productoAEditar.id, productoAEditar, options)
+        return productoEditado
+
+    } catch (error) {
+        throw error
+    }
+
 }
 
 const eliminarProducto = async (id) => {
