@@ -45,15 +45,19 @@ const getOne = async (req, res) => {
 const create = async (req, res) => {
 
     const productoACrear = req.body
-    // console.log(productoACrear)
 
     try {
-        const productoModel = new ProductoModelo(productoACrear)
-        const productoCreado = await productoModel.save()
-        res.status(201).json(productoCreado)
+
+        const productoGuardado = await models.crearUnProducto(productoACrear)
+        res.status(201).json(productoGuardado)
+
     } catch (error) {
+
         console.log(error)
-        res.status(400).json({ mensaje: 'No se pudo crear el producto' })
+        res.status(500).json({
+            mensaje: 'No se pudo crear el producto'
+        })
+
     }
 
 }
