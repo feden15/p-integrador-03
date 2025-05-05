@@ -37,8 +37,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/productos', routerProductos)
-app.use('/api/v1/uploads/', routerUploads)
-app.use('/api/v1/carrito/', routerCarrito)
+app.use('/api/v1/uploads', routerUploads)
+app.use('/api/v1/carrito', routerCarrito)
 // ! --------------------------------------------------------------------------
 
 // ! Arranque

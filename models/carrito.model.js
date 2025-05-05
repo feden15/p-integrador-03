@@ -2,9 +2,15 @@
 
 import mongoose from 'mongoose'
 
-const carritoSchema = mongoose.Schema({
+const carritoSchema = mongoose.Schema(
+    {
     carrito: Array
-})
+    },
+    {
+        versionKey: false,
+        timestamps: true
+    }
+)
 
 // ! Con el esquema, creo el modelo
 

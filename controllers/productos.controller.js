@@ -1,11 +1,12 @@
 import models from '../models/productos.model.js'
+import handleMongoId from '../utils/handle-mongo-id.js'
 
 const getAll = async (req, res) => {
 
     try {
 
         const productos = await models.obtenerTodosLosProductos()
-        res.json(productos)
+        res.json(handleMongoId(productos))
 
     } catch (error) {
 
@@ -26,7 +27,7 @@ const getOne = async (req, res) => {
 
         if (id) {
             const producto = await models.obtenerUnProducto(id)
-            res.json(producto)
+            res.json(handleMongoId(producto))
         } else {
             res.status(400).json({
                 mensaje: 'No se envió la información necesaria'
@@ -49,7 +50,7 @@ const create = async (req, res) => {
     try {
 
         const productoGuardado = await models.crearUnProducto(productoACrear)
-        res.status(201).json(productoGuardado)
+        res.status(201).json(handleMongoId(productoGuardado))
 
     } catch (error) {
 
@@ -71,7 +72,7 @@ const update = async (req, res) => {
     try {
         
         const productoActualizado = await models.editarUnProducto(productoAEditar)
-        res.json(productoActualizado)
+        res.json(handleMongoId(productoActualizado))
         
     } catch (error) {
 
@@ -91,7 +92,7 @@ const remove = async (req, res) => {
     try {
 
         const productoEliminado = await models.eliminarProducto(id)
-        res.json(productoEliminado)
+        res.json(handleMongoId(productoEliminado))
 
     } catch (error) {
 
