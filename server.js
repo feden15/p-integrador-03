@@ -3,6 +3,7 @@ import 'dotenv/config'
 import connection from './utils/connection.js'
 import routerProductos from './routers/productos.router.js'
 import routerUploads from './routers/uploads.router.js'
+import routerCarrito from './routers/carrito.router.js'
 import path from 'node:path'
 import cors from 'cors'
 
@@ -10,8 +11,8 @@ import cors from 'cors'
 
 const app = express()
 const PORT = process.env.PORT
-// const URI_DB = process.env.URI_LOCAL
-const URI_DB = process.env.URI_REMOTA
+const URI_DB = process.env.URI_LOCAL
+// const URI_DB = process.env.URI_REMOTA
 const URL_FRONT = process.env.URL_FRONTEND_CORS
 // ! --------------------------------------------------------------------------
 
@@ -37,6 +38,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/productos', routerProductos)
 app.use('/api/v1/uploads/', routerUploads)
+app.use('/api/v1/carrito/', routerCarrito)
 // ! --------------------------------------------------------------------------
 
 // ! Arranque
