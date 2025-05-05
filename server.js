@@ -16,6 +16,10 @@ app.use(express.json()) // para poder comprender lo que llega en el body a travÃ
 
 // ! Rutas
 
+app.get('/', (req, res) => {
+    res.send('Proyecto Integrador - Etapa 3')
+})
+
 app.use('/api/v1/productos', routerProductos)
 app.use('/api/v1/uploads/', routerUploads)
 
