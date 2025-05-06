@@ -21,17 +21,21 @@ const URL_FRONT = process.env.URL_FRONTEND_CORS
 const allowedOrigins = process.env.URL_FRONTEND_CORS?.split(',')
 
 const corsConfig = {
-    
-  origin: function (origin, callback) {
 
-    if (!origin) return callback(null, true)
+    origin: function (origin, callback) {
 
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true)
-    } else {
-      return callback(new Error('No permitido por CORS'))
+        console.log('Solicitud desde:', origin);
+
+        if (!origin) return callback(null, true)
+
+        if (allowedOrigins.includes(origin)) {
+            console.log('✔️ Permitido');
+            return callback(null, true)
+        } else {
+            console.log('❌ No permitido');
+            return callback(new Error('No permitido por CORS'))
+        }
     }
-  }
 
 }
 // ! --------------------------------------------------------------------------
@@ -58,7 +62,7 @@ app.use('/api/v1/carrito', routerCarrito)
 
 app.listen(PORT, (err) => {
     if (err) throw new Error('No se pudo levantar el servidor')
-        console.log(`Aplicación funcionando http://localhost:${PORT}`)
+    console.log(`Aplicación funcionando http://localhost:${PORT}`)
     connection(URI_DB)
 })
 // ! --------------------------------------------------------------------------
