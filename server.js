@@ -19,7 +19,16 @@ const URL_FRONT = process.env.URL_FRONTEND_CORS
 // ! Configuraciones
 
 const corsConfig = {
-    origin: URL_FRONT
+    origin: function (origin, callback) {
+        console.log('Origin recibido:', origin)
+        if (!origin || origin === process.env.URL_FRONTEND_CORS) {
+            console.log('Origin permitido')
+            callback(null, true)
+        } else {
+            console.log('Origin bloqueado')
+            callback(new Error('No permitido por CORS'))
+        }
+    }
 }
 // ! --------------------------------------------------------------------------
 
