@@ -30,13 +30,37 @@ const URI_DB = process.env.URI_REMOTA
 //         }
 //     }
 // }
+
+const allowedOrigins = [
+    process.env.URL_FRONTEND_CORS,
+    'http://localhost:3000' // Desarrollo
+];
 // ! --------------------------------------------------------------------------
 
 // ! Middlewares
 
 app.use(express.json()) // para poder comprender lo que llega en el body a través de un json
-app.use(cors())
 app.use(express.static(path.join('public')))
+app.use(cors())
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    }
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    next();
+});
+
+// Archivos estáticos con CORS específico
+app.use('/uploads',
+    (req, res, next) => {
+        res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+        next();
+    },
+    express.static(path.join(process.cwd(), 'public', 'uploads'))
+);
 // ! --------------------------------------------------------------------------
 
 // ! Rutas
