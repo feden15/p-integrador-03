@@ -13,30 +13,30 @@ const app = express()
 const PORT = process.env.PORT
 // const URI_DB = process.env.URI_LOCAL
 const URI_DB = process.env.URI_REMOTA
-const URL_FRONT = process.env.URL_FRONTEND_CORS
+// const URL_FRONT = process.env.URL_FRONTEND_CORS
 // ! --------------------------------------------------------------------------
 
 // ! Configuraciones
 
-const corsConfig = {
-    origin: function (origin, callback) {
-        console.log('Origin recibido:', origin)
-        if (!origin || origin === process.env.URL_FRONTEND_CORS) {
-            console.log('Origin permitido')
-            callback(null, true)
-        } else {
-            console.log('Origin bloqueado')
-            callback(new Error('No permitido por CORS'))
-        }
-    }
-}
+// const corsConfig = {
+//     origin: function (origin, callback) {
+//         console.log('Origin recibido:', origin)
+//         if (!origin || origin === URL_FRONT) {
+//             console.log('Origin permitido')
+//             callback(null, true)
+//         } else {
+//             console.log('Origin bloqueado')
+//             callback(new Error('No permitido por CORS'))
+//         }
+//     }
+// }
 // ! --------------------------------------------------------------------------
 
 // ! Middlewares
 
 app.use(express.json()) // para poder comprender lo que llega en el body a través de un json
+app.use(cors())
 app.use(express.static(path.join('public')))
-app.use(cors(corsConfig))
 // ! --------------------------------------------------------------------------
 
 // ! Rutas
