@@ -18,8 +18,21 @@ const URL_FRONT = process.env.URL_FRONTEND_CORS
 
 // ! Configuraciones
 
+const allowedOrigins = process.env.URL_FRONTEND_CORS?.split(',')
+
 const corsConfig = {
-    origin: URL_FRONT // link completo de netlify (frontend)
+    
+  origin: function (origin, callback) {
+
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    } else {
+      return callback(new Error('No permitido por CORS'))
+    }
+  }
+
 }
 // ! --------------------------------------------------------------------------
 
