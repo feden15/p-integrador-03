@@ -14,6 +14,7 @@ const PORT = process.env.PORT
 // const URI_DB = process.env.URI_LOCAL
 const URI_DB = process.env.URI_REMOTA
 const URL_FRONT = process.env.URL_FRONTEND_CORS
+console.log(URL_FRONT)
 // ! --------------------------------------------------------------------------
 
 // ! Configuraciones
