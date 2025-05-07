@@ -8,7 +8,7 @@ const uploadImagen = (req, res) => {
         })
     }
 
-    const urlCompletaBack = `${req.protocol}://${req.get('host')}/uploads/${imagen.filename}`
+    const urlCompletaBack = `${req.protocol}://${req.get('host')}/api/v1/uploads/${imagen.filename}`
 
     res.status(201).json({
         foto: urlCompletaBack
