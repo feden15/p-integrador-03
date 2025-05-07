@@ -31,7 +31,7 @@ const corsConfig = {
 
 app.use(express.json())
 app.use(express.static(path.join('public')))
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'))) // para poder servir fotos del back y no de GitHub
+app.use('api/v1/uploads', express.static(path.join(__dirname, 'public/uploads'))) // para poder servir fotos del back y no de GitHub
 app.use(cors(corsConfig))
 // ! --------------------------------------------------------------------------
 
