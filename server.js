@@ -6,6 +6,8 @@ import routerUploads from './routers/uploads.router.js'
 import routerCarrito from './routers/carrito.router.js'
 import path from 'node:path'
 import cors from 'cors'
+import { fileURLToPath } from 'url'
+
 
 // ! Constantes
 
@@ -13,7 +15,9 @@ const app = express()
 const PORT = process.env.PORT
 const URI_DB = process.env.URI_REMOTA
 const URL_FRONT = process.env.URL_FRONTEND_CORS
-// console.log(URL_FRONT)
+
+const __filename = fileURLToPath(import.meta.url) // para poder servir fotos del back y no de GitHub
+const __dirname = path.dirname(__filename) // para poder servir fotos del back y no de GitHub
 // ! --------------------------------------------------------------------------
 
 // ! Configuraciones
@@ -25,8 +29,9 @@ const corsConfig = {
 
 // ! Middlewares
 
-app.use(express.json()) // para poder comprender lo que llega en el body a través de un json
+app.use(express.json())
 app.use(express.static(path.join('public')))
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'))) // para poder servir fotos del back y no de GitHub
 app.use(cors(corsConfig))
 // ! --------------------------------------------------------------------------
 
