@@ -1,6 +1,8 @@
 # Nombre: Federico Nova
 
-# Link Github Repo: https://github.com/feden15/p-integrador-03
+# Link Github Repositorio Etapa 2 (Front): https://github.com/feden15/p-integrador-02
+
+# Link Github Repositorio Etapa 3 (Back): https://github.com/feden15/p-integrador-03
 
 # Link Netlify: https://p-integrador-03.netlify.app/
 
